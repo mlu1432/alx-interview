@@ -24,8 +24,8 @@ status_codes = {
 
 # Regular expression to match the log line format
 log_pattern = re.compile(
-    r'(?P<ip>\d+\.\d+\.\d+\.\d+) - \[(?P<date>.*?)\] "GET /projects/260 HTTP/1\.1" '
-    r'(?P<status>\d{3}) (?P<size>\d+)'
+    r'(?P<ip>\d+\.\d+\.\d+\.\d+) - \[(?P<date>.*?)\] '
+    r'"GET /projects/260 HTTP/1\.1" (?P<status>\d{3}) (?P<size>\d+)'
 )
 
 
