@@ -1,31 +1,39 @@
 #!/usr/bin/python3
-"""making changes"""
+"""
+Coin Change Algorithm using a Greedy Approach.
+"""
 
 
 def makeChange(coins, total):
     """
-    Determine the fewest number of coins needed to meet a given amount total.
+    Calculate the fewest number of coins needed to meet a given total amount.
 
     Args:
-        coins (list): A list of the values of the coins in your possession.
-        total (int): The total amount for which you need to make change.
+        coins (list): A list of available coin values.
+        total (int): The target amount of change.
 
     Returns:
-        int: The fewest number of coins needed to meet the total.
-        If the total cannot be met by any number of coins, return -1.
-        If the total is 0 or less, return 0.
+        int: The fewest number of coins needed to reach the total,
+             or -1 if it's not possible.
     """
     if total <= 0:
         return 0
 
-    # Initialize dp array with 'inf', representing unreachable amounts
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0  # Base case, no coins needed to make total 0
+    # Sort coins in descending order to use the largest denomination first
+    coins.sort(reverse=True)
 
-    # Update dp array for each coin
+    ncoins = 0  # Counter for number of coins used
+    cpy_total = total
+
     for coin in coins:
-        for amount in range(coin, total + 1):
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
+        # Use as many of the current coin as possible
+        while cpy_total >= coin:
+            cpy_total -= coin
+            ncoins += 1
 
-    # Return the result for the total amount or -1 if unreachable
-    return dp[total] if dp[total] != float('inf') else -1
+        # If we have made the exact total, break
+        if cpy_total == 0:
+            break
+
+    # If there's any remaining amount, return -1 (change not possible)
+    return -1 if cpy_total > 0 else ncoins
